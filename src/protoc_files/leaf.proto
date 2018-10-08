@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package leaf;
+
+service LeafService{
+    rpc Leaf(LeafRequest) returns (LeafResponse) {}
+}
+
+
+message UtilRequest {
+    bool util_request = 1;
+}
+
+message LeafRequest {
+    // Define the messages you want in your leaf microservice here.
+    uint32 leaf_server_id = 1;
+    UtilRequest util_request = 2;
+    uint64 request_id = 3;
+}
+
+message UtilResponse {
+    bool util_present = 1;
+    uint64 user_time = 2;
+    uint64 system_time = 3;
+    uint64 io_time = 4;
+    uint64 idle_time = 5;
+}
+
+message LeafResponse {
+    uint64 leaf_time = 1;
+    UtilResponse util_response = 2;
+    uint64 request_id = 3;
+    uint32 request_server_id = 4;
+}
+

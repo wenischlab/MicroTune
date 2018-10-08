@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+
+package mid_tier_service;
+
+service MidTierService {
+// Define messages that apply to your microservice here.
+    rpc MidTier (MidTierRequest) returns (MidTierResponse) {}
+}
+
+message UtilRequest {
+    bool util_request = 1;
+}
+
+message MidTierRequest {
+    UtilRequest util_request = 1;
+    bool last_request = 2;
+    uint64 resp_time = 3;
+    bool kill = 4;
+    uint64 request_id = 5;
+    uint32 load = 6;
+}
+
+message Util {
+    uint64 user_time = 1;
+    uint64 system_time = 2;
+    uint64 io_time = 3;
+    uint64 idle_time = 4;
+}
+
+message UtilResponse {
+    bool util_present = 1;
+    repeated Util leaf_srv_util = 2;
+    Util mid_tier_util = 3;
+}
+
+message MidTierResponse {
+    uint64 leaf_time = 1;
+    uint32 number_of_leaf_servers = 2;
+    UtilResponse util_response = 3;
+    uint64 mid_tier_time = 4;
+    uint64 resp_time = 5;
+    uint64 request_id = 6;
+    uint64 num_inline = 7;
+    uint64 num_workers = 8;
+    uint64 num_resp = 9; 
+    bool kill_ack = 10;
+    uint64 calculate_leaf_time = 11;
+}
